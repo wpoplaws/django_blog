@@ -1,0 +1,54 @@
+{% extends 'blog/main.html' %}
+{% block title%} Lista postow{% endblock %}
+{% block body%}
+    {% if user.is_authenticated %}
+        Witam {{user.username}}<br>
+        <a href="{% url 'logout' %}" class="btn btn-primary" >Wyloguj </a>
+    {% else %}
+        <a href="{% url 'login' %}" class="btn btn-primary" >Zaloguj </a>
+    {% endif %}
+
+<h1>
+    Witaj na stronie Wojciecha Popławskiego
+    <h5>
+        {% if user.is_authenticated %}
+            <a href="{% url 'new_post' %}" class="btn btn-primary" >Nowy post </a>
+        {% endif %}
+    </h5>
+</h1>
+
+
+
+{% for post in posty %}
+<div class="card" style="width: 50%;">
+    <div class="card-body">
+        <div>
+            <img src="/media/{{post.image}}">
+            <h2>
+                <a href="{{ post.get_absolute_url }}">
+                    {{ post.title }}
+                </a>
+
+            </h2>
+            <p class="date">
+                Opublikowany {{ post.date_added }} przez {{ post.author}}
+            </p>
+            <p>{{ post.description|truncatechars_html:229 }}
+
+            <a href="{{ post.get_absolute_url }}">
+                    czytaj więcej!
+                </a></p>
+
+
+          {% if user.is_authenticated %}
+            <a href="{% url 'update_post' post.id %}" class="btn btn-primary" >Edytuj </a>
+            <a href="{% url 'delete_post' post.id %}" class="btn btn-primary">Usuń </a>
+          {% endif %}
+
+     </div>
+    </div>
+</div>
+
+
+    {% endfor %}
+{% endblock %}

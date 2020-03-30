@@ -1,0 +1,16 @@
+{% extends 'blog/main.html' %}
+
+{% block title%} Potwierdź {% endblock %}
+{% block body%}
+<div class="alert alert-primary" role="alert">
+  Czy na pewno chcesz usunąć post o nazwie : "{{ post.title }}" ?
+</div>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary"> Tak </button>
+    <a href="{% url 'post_list' %} "class="btn btn-primary" >Cofnij </a>
+
+</form>
+
+
+{% endblock %}
