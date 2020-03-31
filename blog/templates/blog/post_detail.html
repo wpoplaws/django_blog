@@ -12,7 +12,7 @@
             <p class="date">
                 Opublikowany {{ post.date_added }} przez {{ post.author}}
             </p>
-            <p>{{ post.description }}</p>
+            <p>{{ post.description|safe }}</p>
             <a href="{% url 'post_list' %} "class="btn btn-primary" >Cofnij </a>
       </div>
 

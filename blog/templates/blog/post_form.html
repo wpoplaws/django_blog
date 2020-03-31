@@ -5,12 +5,13 @@
 
 
 
-<div class="card" style="width: 60%;">
+<div class="card" style="width: 70%;">
 
   <div class="card-body">
       <h5 class="card-title">Dodaj post </h5>
           <form method="post" enctype="multipart/form-data">
             {%  csrf_token  %}
+              {{form.media}}
             {{form|bootstrap}}
              <button type="submit" class="btn btn-primary">Zapisz</button>
              <a href="{% url 'post_list' %} "class="btn btn-primary" >Cofnij </a>

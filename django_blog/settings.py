@@ -42,8 +42,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'bootstrapform',
+    'ckeditor',
+    'ckeditor_uploader',
     'blog',
 ]
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -137,10 +141,13 @@ MEDIA_ROOT = 'media/'
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = 'static/'
+
 LOGIN_URL = 'login'
 
 LOGIN_REDIRECT_URL = 'post_list'
 
 LOGOUT_REDIRECT_URL = 'login'
+
 
 

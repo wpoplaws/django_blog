@@ -33,7 +33,7 @@
             <p class="date">
                 Opublikowany {{ post.date_added }} przez {{ post.author}}
             </p>
-            <p>{{ post.description|truncatechars_html:229 }}
+            <p>{{ post.description|truncatechars_html:229|safe }}
 
             <a href="{{ post.get_absolute_url }}">
                     czytaj więcej!

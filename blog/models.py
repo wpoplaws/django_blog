@@ -1,4 +1,7 @@
 from datetime import datetime
+
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.utils import timezone
 from django.template.defaultfilters import slugify
 from django.db import models
@@ -26,7 +29,9 @@ class Post(models.Model):
 
     title = models.CharField(max_length=128)
     slug = models.SlugField(max_length=40, unique_for_date='date_added', blank=True)
-    description = models.TextField(default="")
+    #description = models.TextField(default="")
+    #description = RichTextField(default="")
+    description = RichTextUploadingField(default="")
     date_added = models.DateTimeField(default=datetime.now, blank=True)
     image = models.ImageField(upload_to="Images", blank=True,)
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
