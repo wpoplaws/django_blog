@@ -19,7 +19,7 @@
 
 
 
-{% for post in posty %}
+{% for post in posts %}
 <div class="card" style="width: 50%;">
     <div class="card-body">
         <div>
@@ -51,4 +51,25 @@
 
 
     {% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if posts.has_previous %}
+            <a href="?page=1" class="btn btn-primary">&laquo; first</a>
+            <a href="?page={{ posts.previous_page_number }}" class="btn btn-primary">previous</a>
+        {% endif %}
+
+        <span class="current btn btn-primary m-2">
+            Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+        </span>
+
+        {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }} "class="btn btn-primary">next</a>
+            <a href="?page={{ posts.paginator.num_pages }}"class="btn btn-primary">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+
+
 {% endblock %}

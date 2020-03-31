@@ -7,6 +7,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from blog.serializers import UserSerializer, GroupSerializer, PostSerializer, CommentsSerializer
 from .forms import PostForm
+from django.core.paginator import Paginator
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -26,8 +27,12 @@ class PostViewSet(viewsets.ModelViewSet):
 
 
 def post_list(request):
-    posty = Post.published.all()
-    return render(request, 'blog/post_list.html', {"posty": posty})
+    al_posts = Post.published.all()
+    paginator = Paginator(al_posts, 3)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
+
+    return render(request, 'blog/post_list.html', {"posts": posts})
 
 
 def post_detail(request, year, month, day, post):
@@ -39,6 +44,7 @@ def post_detail(request, year, month, day, post):
     return render(request, 'blog/post_detail.html',
                   {'post': post})
 
+
 @login_required
 def new_post(request):
     form = PostForm(request.POST or None, request.FILES or None)
@@ -48,6 +54,7 @@ def new_post(request):
         return redirect('post_list')
 
     return render(request, 'blog/post_form.html', {"form": form})
+
 
 @login_required
 def update_post(request, id):
@@ -59,6 +66,7 @@ def update_post(request, id):
         return redirect('post_list')
 
     return render(request, 'blog/post_form.html', {"form": form})
+
 
 @login_required
 def delete_post(request, id):
@@ -73,7 +81,6 @@ def delete_post(request, id):
 
 
 class CommentsViewSet(viewsets.ModelViewSet):
-
     queryset = Comments.objects.all().order_by('com_created_date')
     serializer_class = CommentsSerializer
     authentication_classes = (TokenAuthentication,)
