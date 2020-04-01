@@ -1,4 +1,5 @@
 {% extends 'blog/main.html' %}
+{% load bootstrap %}
 {% block title%} Lista postow{% endblock %}
 {% block body%}
     {% if user.is_authenticated %}
@@ -7,13 +8,20 @@
     {% else %}
         <a href="{% url 'login' %}" class="btn btn-primary" >Zaloguj </a>
     {% endif %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'post_list' %}" class="btn btn-primary" >Strona główna </a>
+    {% endif %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'new_post' %}" class="btn btn-primary" >Nowy post </a>
+    {% endif %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'messages_list' %}" class="btn btn-primary" >Wiadomości</a>
+    {% endif %}
 
 <h1>
     Witaj na stronie Wojciecha Popławskiego
     <h5>
-        {% if user.is_authenticated %}
-            <a href="{% url 'new_post' %}" class="btn btn-primary" >Nowy post </a>
-        {% endif %}
+        <a href="{% url 'ask_question' %}" class="btn btn-primary" >Zadaj pytanie </a>
     </h5>
 </h1>
 
@@ -37,7 +45,8 @@
 
             <a href="{{ post.get_absolute_url }}">
                     czytaj więcej!
-                </a></p>
+                </a>
+            </p>
 
 
           {% if user.is_authenticated %}
@@ -55,20 +64,22 @@
 <div class="pagination">
     <span class="step-links">
         {% if posts.has_previous %}
-            <a href="?page=1" class="btn btn-primary">&laquo; first</a>
-            <a href="?page={{ posts.previous_page_number }}" class="btn btn-primary">previous</a>
+            <a href="?page=1" class="btn btn-primary">&laquo; pierwsza</a>
+            <a href="?page={{ posts.previous_page_number }}" class="btn btn-primary">poprzednia</a>
         {% endif %}
 
         <span class="current btn btn-primary m-2">
-            Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+            Strona {{ posts.number }} z {{ posts.paginator.num_pages }}.
         </span>
 
         {% if posts.has_next %}
-            <a href="?page={{ posts.next_page_number }} "class="btn btn-primary">next</a>
-            <a href="?page={{ posts.paginator.num_pages }}"class="btn btn-primary">last &raquo;</a>
+            <a href="?page={{ posts.next_page_number }} "class="btn btn-primary">następna</a>
+            <a href="?page={{ posts.paginator.num_pages }}"class="btn btn-primary">ostatnia &raquo;</a>
         {% endif %}
     </span>
 </div>
+
+
 
 
 

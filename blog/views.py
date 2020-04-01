@@ -2,11 +2,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from rest_framework.authentication import TokenAuthentication
 from django.contrib.auth.decorators import login_required
-from .models import Post, Comments
+from .models import Post, Comments, Question
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from blog.serializers import UserSerializer, GroupSerializer, PostSerializer, CommentsSerializer
-from .forms import PostForm
+from .forms import PostForm, CommentForm, EmailPostForm
 from django.core.paginator import Paginator
 
 
@@ -24,6 +24,8 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     authentication_classes = (TokenAuthentication,)
+
+
 
 
 def post_list(request):
@@ -75,7 +77,7 @@ def delete_post(request, id):
 
     if request.method == 'POST':
         post.delete()
-        return redirect('http://127.0.0.1:8000/')
+        return redirect('post_list')
 
     return render(request, 'blog/confirm.html', {"post": post})
 
@@ -84,3 +86,45 @@ class CommentsViewSet(viewsets.ModelViewSet):
     queryset = Comments.objects.all().order_by('com_created_date')
     serializer_class = CommentsSerializer
     authentication_classes = (TokenAuthentication,)
+
+
+def ask_question(request):
+    question = EmailPostForm(request.POST or None, request.FILES or None)
+
+    if question.is_valid():
+        question.save()
+        return redirect('question_confirm')
+
+    return render(request, 'blog/ask_question.html', {"question": question})
+
+
+def question_confirm(request):
+
+    return render(request, 'blog/question_confirm.html', )
+
+
+class Messages(object):
+    pass
+
+
+def messages_list(request):
+    al_messages = Question.objects.all()
+    paginator = Paginator(al_messages ,3)
+    page = request.GET.get('page')
+    messages = paginator.get_page(page)
+
+    return render(request, 'blog/messages.html', {"messages": messages})
+
+
+@login_required
+def delete_message(request, id):
+    message = get_object_or_404(Question, pk=id)
+    form = EmailPostForm(request.POST or None, request.FILES or None, instance=message)
+
+    if request.method == 'POST':
+        message.delete()
+        return redirect('messages_list')
+
+    return render(request, 'blog/message_confirm.html', {"message": message})
+
+

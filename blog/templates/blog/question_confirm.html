@@ -1,0 +1,15 @@
+{% extends 'blog/main.html' %}
+
+{% block title%} Wiadomość została wysłana {% endblock %}
+{% block body%}
+<div class="alert alert-primary" role="alert">
+  Twoja wiadomość została wysłana !
+</div>
+<form method="post">
+    {% csrf_token %}
+    <a href="{% url 'post_list' %} "class="btn btn-primary" >OK </a>
+
+</form>
+
+
+{% endblock %}

@@ -16,12 +16,6 @@ class PublishedManager(models.Manager):
             .filter(status='published')
 
 
-class Comments(models.Model):
-    com_author = models.CharField(max_length=200)
-    com_text = models.TextField()
-    com_created_date = models.DateTimeField(default=datetime.now, blank=True)
-
-
 class Post(models.Model):
     STATUS_CHOICES = (
         ('draft', 'Draft'), ('published', "Published"),
@@ -29,11 +23,9 @@ class Post(models.Model):
 
     title = models.CharField(max_length=128)
     slug = models.SlugField(max_length=40, unique_for_date='date_added', blank=True)
-    #description = models.TextField(default="")
-    #description = RichTextField(default="")
     description = RichTextUploadingField(default="")
     date_added = models.DateTimeField(default=datetime.now, blank=True)
-    image = models.ImageField(upload_to="Images", blank=True,)
+    image = models.ImageField(upload_to="Images", blank=True, )
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     objects = models.Manager()
@@ -55,3 +47,28 @@ class Post(models.Model):
                              self.date_added.month,
                              self.date_added.day,
                              self.slug])
+
+
+class Comments(models.Model):
+    post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comments', default=" ")
+    author = models.CharField(max_length=200)
+    text = models.TextField()
+    created_date = models.DateTimeField(default=datetime.now, blank=True)
+    approved_comment = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ('-created_date',)
+
+    def approve(self):
+        self.approved_comment = True
+        self.save()
+
+    def __str__(self):
+        return self.text
+
+
+class Question(models.Model):
+    name = models.CharField(max_length=25)
+    email = models.EmailField()
+    comments = models.TextField(max_length=2000)
+    create_date = models.DateTimeField(default=datetime.now, blank=True)
