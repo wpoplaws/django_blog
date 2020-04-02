@@ -2,6 +2,22 @@
 
 {% block title%} Potwierdź {% endblock %}
 {% block body%}
+
+ {% if user.is_authenticated %}
+        Witam {{user.username}}<br>
+        <a href="{% url 'logout' %}" class="btn btn-primary" >Wyloguj </a>
+    {% else %}
+        <a href="{% url 'login' %}" class="btn btn-primary" >Zaloguj </a>
+    {% endif %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'post_list' %}" class="btn btn-primary" >Strona główna </a>
+    {% endif %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'new_post' %}" class="btn btn-primary" >Nowy post </a>
+    {% endif %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'messages_list' %}" class="btn btn-primary" >Wiadomości</a>
+    {% endif %}
 <div class="alert alert-primary" role="alert">
   Czy na pewno chcesz usunąć post o nazwie : "{{ post.title }}" ?
 </div>

@@ -1,6 +1,6 @@
 {% extends 'blog/main.html' %}
 {% load bootstrap %}
-{% block title%} Lista postow{% endblock %}
+{% block title%} Wiadomości{% endblock %}
 {% block body%}
 
 <div class="menu">
@@ -26,7 +26,7 @@
     <div class="card-body">
         <div>
             <p class="date">
-                Opublikowany {{ message.create_date }} przez {{ message.name}} adres email :  {{ message.email }}
+                Wysłany{{ message.create_date }} przez {{ message.name}} adres email :  {{ message.email }}
             </p>
             <p>{{ message.comments }}</p>
              {% if user.is_authenticated %}

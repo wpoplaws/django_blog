@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.utils import timezone
@@ -52,6 +51,7 @@ class Post(models.Model):
 class Comments(models.Model):
     post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comments', default=" ")
     author = models.CharField(max_length=200)
+    email = models.EmailField(default="")
     text = models.TextField()
     created_date = models.DateTimeField(default=datetime.now, blank=True)
     approved_comment = models.BooleanField(default=False)
@@ -68,7 +68,10 @@ class Comments(models.Model):
 
 
 class Question(models.Model):
-    name = models.CharField(max_length=25)
-    email = models.EmailField()
-    comments = models.TextField(max_length=2000)
+    name = models.CharField(max_length=25, blank=False)
+    email = models.EmailField( blank=False)
+    comments = models.TextField(max_length=2000, blank=False)
     create_date = models.DateTimeField(default=datetime.now, blank=True)
+    phone_number = models.CharField(max_length=12, blank=True, default="")
+
+

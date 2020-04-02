@@ -8,6 +8,7 @@ from rest_framework import viewsets
 from blog.serializers import UserSerializer, GroupSerializer, PostSerializer, CommentsSerializer
 from .forms import PostForm, CommentForm, EmailPostForm
 from django.core.paginator import Paginator
+from django.conf import settings
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -24,8 +25,6 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     authentication_classes = (TokenAuthentication,)
-
-
 
 
 def post_list(request):
@@ -99,7 +98,6 @@ def ask_question(request):
 
 
 def question_confirm(request):
-
     return render(request, 'blog/question_confirm.html', )
 
 
@@ -109,7 +107,7 @@ class Messages(object):
 
 def messages_list(request):
     al_messages = Question.objects.all()
-    paginator = Paginator(al_messages ,3)
+    paginator = Paginator(al_messages, 3)
     page = request.GET.get('page')
     messages = paginator.get_page(page)
 
@@ -126,5 +124,3 @@ def delete_message(request, id):
         return redirect('messages_list')
 
     return render(request, 'blog/message_confirm.html', {"message": message})
-
-

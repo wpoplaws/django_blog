@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'bootstrapform',
     'ckeditor',
     'ckeditor_uploader',
+    'captcha',
     'blog',
 ]
 
@@ -151,3 +152,9 @@ LOGOUT_REDIRECT_URL = 'login'
 
 
 
+
+RECAPTCHA_PUBLIC_KEY = '6LdaJeYUAAAAAM_9ysufkZMsAsPaYtRGxc_d5edT'
+RECAPTCHA_PRIVATE_KEY = "6LdaJeYUAAAAAACnoB1LvH9KLKdnFazxnlG5OfF8"
+
+# RECAPTCHA_SITE_KEY = "6LdAHuYUAAAAANUrnxmB25t5MgE35sLYbhr1I11L"
+# RECAPTCHA_SECRET_KEY = "6LdAHuYUAAAAAJtfgOhF-LeEt7xLC-xmxn5hPAAQ"
