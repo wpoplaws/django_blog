@@ -20,8 +20,16 @@ margin-bottom: 25px;
 display: block;
 margin-left: auto;
 margin-right: auto;
-margin-top: 20px;
-margin-bottom: 20px;
+margin-top: 10px;
+margin-bottom: 10px;
+
+}
+.card-body {
+display: block;
+margin-left: auto;
+margin-right: auto;
+margin-top: 1px;
+margin-bottom: 1px;
 
 }
 
@@ -29,3 +37,16 @@ margin-bottom: 20px;
 margin-top: 20px;
 margin-bottom: 20px;
 }
+
+.aaa{
+border: medium solid blue;
+margin-left: auto;
+margin-right: auto;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+textarea {
+
+height:100px;
+}
+

@@ -29,14 +29,21 @@ class PostForm(ModelForm):
 class CommentForm(ModelForm):
     class Meta:
         model = Comments
-        fields = ('author', 'text',)
+        fields = ('author', 'email', 'text',)
+        labels = {
+            "text": "Treść",
+            "email": "Email",
+            "author": "Autor",
+
+        }
 
 
 class EmailPostForm(ModelForm):
     captcha = ReCaptchaField(label="")
+
     class Meta:
         model = Question
-        fields = ('name', 'email', 'phone_number', 'comments', )
+        fields = ('name', 'email', 'phone_number', 'comments',)
         labels = {
             "name": "Imię i Nazwisko*",
             "comments": "Wiadomość*",

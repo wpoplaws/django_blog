@@ -54,7 +54,7 @@ class Comments(models.Model):
     email = models.EmailField(default="")
     text = models.TextField()
     created_date = models.DateTimeField(default=datetime.now, blank=True)
-    approved_comment = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
 
     class Meta:
         ordering = ('-created_date',)

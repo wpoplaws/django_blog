@@ -9,6 +9,7 @@ from blog.serializers import UserSerializer, GroupSerializer, PostSerializer, Co
 from .forms import PostForm, CommentForm, EmailPostForm
 from django.core.paginator import Paginator
 from django.conf import settings
+from django.http import HttpResponseRedirect
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -37,13 +38,30 @@ def post_list(request):
 
 
 def post_detail(request, year, month, day, post):
+
     post = get_object_or_404(Post, slug=post,
                              status='published',
                              date_added__year=year,
                              date_added__month=month,
                              date_added__day=day)
+
+    comments = post.comments.filter(active=True)
+
+    new_comment = None
+
+    if request.method == 'POST':
+
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.post = post
+            new_comment.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        comment_form = CommentForm()
+
     return render(request, 'blog/post_detail.html',
-                  {'post': post})
+                  {'post': post, 'comments': comments, 'comment_form': comment_form, 'new_comment': new_comment, })
 
 
 @login_required

@@ -11,7 +11,7 @@ class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
 
-admin.site.register(Comments)
+
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
@@ -19,3 +19,10 @@ class QuestionAdmin(admin.ModelAdmin):
     list_filter = ["create_date", 'email']
     search_fields = ["email", "name"]
     ordering = ['create_date']
+
+@admin.register(Comments)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ["author", "email", "text","created_date"]
+    list_filter = ["created_date", 'author']
+    search_fields = ["text", "author",'email']
+    ordering = ['created_date']
