@@ -7,9 +7,10 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from blog.serializers import UserSerializer, GroupSerializer, PostSerializer, CommentsSerializer
 from .forms import PostForm, CommentForm, EmailPostForm
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.conf import settings
 from django.http import HttpResponseRedirect
+from taggit.models import Tag
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -28,17 +29,27 @@ class PostViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
 
 
-def post_list(request):
+def post_list(request, tag_slug=None):
     al_posts = Post.published.all()
+    tag = None
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        al_posts = al_posts.filter(tags__in=[tag])
+
     paginator = Paginator(al_posts, 3)
     page = request.GET.get('page')
-    posts = paginator.get_page(page)
 
-    return render(request, 'blog/post_list.html', {"posts": posts})
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    return render(request, 'blog/post_list.html', {"posts": posts, 'tag': tag, 'page': page, })
 
 
 def post_detail(request, year, month, day, post):
-
     post = get_object_or_404(Post, slug=post,
                              status='published',
                              date_added__year=year,

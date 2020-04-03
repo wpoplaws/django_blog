@@ -4,7 +4,7 @@
 {% block body%}
 
 {% if user.is_authenticated %}
-Witam {{user.username}}<br>
+Witam {{user.username}}<br xmlns:blog="http://www.w3.org/1999/xhtml" xmlns:blog="http://www.w3.org/1999/xhtml">
 <a href="{% url 'logout' %}" class="btn btn-primary">Wyloguj </a>
 {% else %}
 <a href="{% url 'login' %}" class="btn btn-primary">Zaloguj </a>
@@ -39,6 +39,16 @@ Witam {{user.username}}<br>
                 <a href="{{ post.get_absolute_url }}">
                     {{ post.title }}
                 </a>
+
+                <p class="tags">
+                    <button type="button" class="btn btn-secondary btn-sm">Tagi: </button>
+                    {% for tag in post.tags.all %}
+                    <a href="{% url 'blog:post_list_by_tag' tag.slug %} " class="btn btn-outline-secondary btn-sm" >
+                    {{ tag.name }}
+                    </a>
+                    {% if not forloop.last %} {% endif %}
+                    {% endfor %}
+                </p>
             </h2>
             <p class="date">
                 Opublikowany {{ post.date_added }} przez {{ post.author}}

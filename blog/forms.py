@@ -12,7 +12,7 @@ from django.conf import settings
 class PostForm(ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'description', 'date_added', 'image', 'author', 'status']
+        fields = ['title', 'description', 'date_added', 'tags', 'image', 'author', 'status']
         widgets = {
             'content': RichTextFormField()}
 
@@ -23,7 +23,9 @@ class PostForm(ModelForm):
             "image": "Zdjęcie",
             "author": "Autor",
             "status": "Status",
+            "tags": "Tagi",
         }
+        help_texts = {'tags': "Rozdzielona przecinkami lista tagów", }
 
 
 class CommentForm(ModelForm):
