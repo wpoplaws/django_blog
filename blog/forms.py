@@ -49,5 +49,4 @@ class EmailPostForm(ModelForm):
             "comments": "Wiadomość*",
             "email": "Email*",
             "phone_number": "Numer telefonu",
-            "captcha": " ",
         }

@@ -2,32 +2,32 @@
 {% load bootstrap %}
 {% block title%} Lista postow{% endblock %}
 {% block body%}
-    {% if user.is_authenticated %}
-        Witam {{user.username}}<br>
-        <a href="{% url 'logout' %}" class="btn btn-primary" >Wyloguj </a>
-    {% else %}
-        <a href="{% url 'login' %}" class="btn btn-primary" >Zaloguj </a>
-    {% endif %}
-    {% if user.is_authenticated %}
-        <a href="{% url 'post_list' %}" class="btn btn-primary" >Strona główna </a>
-    {% endif %}
-    {% if user.is_authenticated %}
-        <a href="{% url 'new_post' %}" class="btn btn-primary" >Nowy post </a>
-    {% endif %}
-    {% if user.is_authenticated %}
-        <a href="{% url 'messages_list' %}" class="btn btn-primary" >Wiadomości</a>
-    {% endif %}
-    {% if user.is_authenticated %}
-        <a href="http://localhost:8000/admin/" class="btn btn-primary" >Admin</a>
-    {% endif %}
+
+{% if user.is_authenticated %}
+Witam {{user.username}}<br>
+<a href="{% url 'logout' %}" class="btn btn-primary">Wyloguj </a>
+{% else %}
+<a href="{% url 'login' %}" class="btn btn-primary">Zaloguj </a>
+{% endif %}
+{% if user.is_authenticated %}
+<a href="{% url 'post_list' %}" class="btn btn-primary">Strona główna </a>
+{% endif %}
+{% if user.is_authenticated %}
+<a href="{% url 'new_post' %}" class="btn btn-primary">Nowy post </a>
+{% endif %}
+{% if user.is_authenticated %}
+<a href="{% url 'messages_list' %}" class="btn btn-primary">Wiadomości</a>
+{% endif %}
+{% if user.is_authenticated %}
+<a href="http://localhost:8000/admin/" class="btn btn-primary">Admin</a>
+{% endif %}
 
 <h1>
     Witaj na stronie Wojciecha Popławskiego
     <h5>
-        <a href="{% url 'ask_question' %}" class="btn btn-primary" >Kontakt </a>
+        <a href="{% url 'ask_question' %}" class="btn btn-primary">Kontakt </a>
     </h5>
 </h1>
-
 
 
 {% for post in posts %}
@@ -39,51 +39,37 @@
                 <a href="{{ post.get_absolute_url }}">
                     {{ post.title }}
                 </a>
-
             </h2>
             <p class="date">
                 Opublikowany {{ post.date_added }} przez {{ post.author}}
             </p>
             <p>{{ post.description|truncatechars_html:229|safe }}
 
-            <a href="{{ post.get_absolute_url }}">
+                <a href="{{ post.get_absolute_url }}">
                     czytaj więcej!
                 </a>
             </p>
-
-
-          {% if user.is_authenticated %}
-            <a href="{% url 'update_post' post.id %}" class="btn btn-primary" >Edytuj </a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'update_post' post.id %}" class="btn btn-primary">Edytuj </a>
             <a href="{% url 'delete_post' post.id %}" class="btn btn-primary">Usuń </a>
-          {% endif %}
-
-     </div>
+            {% endif %}
+        </div>
     </div>
 </div>
-
-
-    {% endfor %}
-
+{% endfor %}
 <div class="pagination">
     <span class="step-links">
         {% if posts.has_previous %}
             <a href="?page=1" class="btn btn-primary">&laquo; pierwsza</a>
             <a href="?page={{ posts.previous_page_number }}" class="btn btn-primary">poprzednia</a>
         {% endif %}
-
         <span class="current btn btn-primary m-2">
             Strona {{ posts.number }} z {{ posts.paginator.num_pages }}.
         </span>
-
         {% if posts.has_next %}
-            <a href="?page={{ posts.next_page_number }} "class="btn btn-primary">następna</a>
-            <a href="?page={{ posts.paginator.num_pages }}"class="btn btn-primary">ostatnia &raquo;</a>
+            <a href="?page={{ posts.next_page_number }} " class="btn btn-primary">następna</a>
+            <a href="?page={{ posts.paginator.num_pages }}" class="btn btn-primary">ostatnia &raquo;</a>
         {% endif %}
     </span>
 </div>
-
-
-
-
-
 {% endblock %}
