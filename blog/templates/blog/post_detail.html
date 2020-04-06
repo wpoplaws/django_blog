@@ -34,7 +34,16 @@ Witam {{user.username}}<br>
         </div>
     </div>
 </div>
-
+<div class="card" style="width: 50%;">
+    <h2>Podobne posty </h2>
+    {% for post in similar_posts %}
+    <p>
+        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+    </p>
+    {% empty %}
+    Brak podobnych postów
+    {% endfor %}
+</div>
 
 <div class="card" style="width: 50%;">
     {% with comments.count as total_comments %}
@@ -55,21 +64,25 @@ Witam {{user.username}}<br>
     </form>
 </div>
 
+{% if comments.count == 0 %}
+    Nie ma żadnego komentarza !
+{% else %}
 {% for comment in post.comments.all %}
 
-<div class="card" style="width: 50%;">
-    <div class="card-coemments">
-        Opublikowane {{ comment.created_date }} <br>
-        <strong> przez: {{ comment.author }}</strong>
-        <p>{{ comment.text|linebreaks }}</p>
+    <div class="card" style="width: 50%;">
+
+        <div class="card-body">
+            Opublikowane {{ comment.created_date }} <br>
+            <strong> przez: {{ comment.author }}</strong>
+            <p>{{ comment.text|linebreaks }}</p>
+            <br>
 
 
-        <br>
-        {% empty %}
-        <p>Nie ma jeszcze żadnego komentarza, bądź pierwszy !</p>
-        {% endfor %}
+        </div>
     </div>
-</div>
+{% endfor %}
+
+{% endif %}
 
 
 {% endblock %}
