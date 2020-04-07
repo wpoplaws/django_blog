@@ -21,7 +21,7 @@ Witam {{user.username}}<br>
 <a href="http://localhost:8000/admin/" class="btn btn-primary">Admin</a>
 {% endif %}
 
-<div class="card" style="width: 50%;">
+<div class="card" style="width: 70%;">
     <div class="card-body">
         <img src="/media/{{post.image}}">
         <div>
@@ -34,7 +34,7 @@ Witam {{user.username}}<br>
         </div>
     </div>
 </div>
-<div class="card" style="width: 50%;">
+<div class="card" style="width: 70%;">
     <h2>Podobne posty </h2>
     {% for post in similar_posts %}
     <p>
@@ -45,7 +45,7 @@ Witam {{user.username}}<br>
     {% endfor %}
 </div>
 
-<div class="card" style="width: 50%;">
+<div class="card" style="width: 70%;">
     {% with comments.count as total_comments %}
     <h2>{{ total_comments }} komentarz{{ total_comments|pluralize:'y' }}</h2>
     {% endwith %}
@@ -69,7 +69,7 @@ Witam {{user.username}}<br>
 {% else %}
 {% for comment in post.comments.all %}
 
-    <div class="card" style="width: 50%;">
+    <div class="card" style="width: 70%;">
 
         <div class="card-body">
             Opublikowane {{ comment.created_date }} <br>

@@ -2,6 +2,7 @@
 {% load bootstrap %}
 {% block title%} Lista postow{% endblock %}
 {% block body%}
+{% load blog_tags %}
 
 {% if user.is_authenticated %}
 Witam {{user.username}}<br xmlns:blog="http://www.w3.org/1999/xhtml" xmlns:blog="http://www.w3.org/1999/xhtml">
@@ -23,51 +24,94 @@ Witam {{user.username}}<br xmlns:blog="http://www.w3.org/1999/xhtml" xmlns:blog=
 {% endif %}
 
 <h1>
-    Witaj na stronie Wojciecha Popławskiego
+    Witaj na mojej stronie :)
     <h5>
         <a href="{% url 'ask_question' %}" class="btn btn-primary">Kontakt </a>
     </h5>
 </h1>
 
-
-{% for post in posts %}
-<div class="card" style="width: 50%;">
-    <div class="card-body">
-        <div>
-            <img src="/media/{{post.image}}">
-            <h2>
-                <a href="{{ post.get_absolute_url }}">
-                    {{ post.title }}
-                </a>
-
-                <p class="tags">
-                    <button type="button" class="btn btn-secondary btn-sm">Tagi: </button>
-                    {% for tag in post.tags.all %}
-                    <a href="{% url 'blog:post_list_by_tag' tag.slug %} " class="btn btn-outline-secondary btn-sm" >
-                    {{ tag.name }}
-                    </a>
-                    {% if not forloop.last %} {% endif %}
-                    {% endfor %}
-                </p>
-            </h2>
-            <p class="date">
-                Opublikowany {{ post.date_added }} przez {{ post.author}}
-            </p>
-            <p>{{ post.description|truncatechars_html:229|safe }}
-
-                <a href="{{ post.get_absolute_url }}">
-                    czytaj więcej!
-                </a>
-            </p>
-            {% if user.is_authenticated %}
-            <a href="{% url 'update_post' post.id %}" class="btn btn-primary">Edytuj </a>
-            <a href="{% url 'delete_post' post.id %}" class="btn btn-primary">Usuń </a>
-            {% endif %}
+<div class="rightcolumn">
+    <div class="rcard">
+        <h2>O mnie </h2>
+        <div class="avatar">
+            <img src="media/Images/avatar.jpg" alt="avatar">
         </div>
+        <p>Mam na imię Wojciech jestem wielkim pasjonatem gór. Do tej pory na moim
+            blogu opublikowałem {% total_posts %} postów. </p>
     </div>
-</div>
-{% endfor %}
-<div class="pagination">
+
+    <div class="rcard">
+        <h3>Najnowsze posty</h3>
+        {%show_latest_posts%}
+    </div>
+    <div class="card">
+        <h3> Śledź moje social media ! :)</h3>
+        <h4 style="margin:10px;padding: 20px;">
+
+            <div class="grid-item"><a href="https://github.com/" target="_blank"><i class="fa fa-github"
+                                                                                    aria-hidden="true"></i>GitHub</a>
+            </div>
+            <br>
+            <div class="grid-item"><a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-square"
+                                                                                     aria-hidden="true"></i>Facebook</a>
+            </div>
+            <br>
+            <div class="grid-item"><a href="https://instagram.com" target="_blank"><i class="fab fa-instagram-square"
+                                                                                      aria-hidden="true"></i>Instagram</a>
+            </div>
+            <br>
+            <div class="grid-item"><a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"
+                                                                                     aria-hidden="true"></i>Linkedin</a>
+            </div>
+            <br>
+
+
+        </h4>
+    </div>
+</div>{% for post in posts %}
+<div class="leftcolumn">
+
+
+    <div class="card">
+        <div class="card-body">
+            <div>
+                <img src="/media/{{post.image}}">
+                <h2>
+                    <a href="{{ post.get_absolute_url }}">
+                        {{ post.title }}
+                    </a>
+
+                    <p class="tags">
+                        <button type="button" class="btn btn-secondary btn-sm">Tagi:</button>
+                        {% for tag in post.tags.all %}
+                        <a href="{% url 'blog:post_list_by_tag' tag.slug %} " class="btn btn-outline-secondary btn-sm">
+                            {{ tag.name }}
+                        </a>
+                        {% if not forloop.last %} {% endif %}
+                        {% endfor %}
+                    </p>
+                </h2>
+                <p class="date">
+                    Opublikowany {{ post.date_added }} przez {{ post.author}}
+                </p>
+                <p>{{ post.description|truncatechars_html:229|safe }}
+
+                    <a href="{{ post.get_absolute_url }}">
+                        czytaj więcej!
+                    </a>
+                </p>
+                {% if user.is_authenticated %}
+                <a href="{% url 'update_post' post.id %}" class="btn btn-primary">Edytuj </a>
+                <a href="{% url 'delete_post' post.id %}" class="btn btn-primary">Usuń </a>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+    {% endfor %}
+
+
+    <div class="pagination">
     <span class="step-links">
         {% if posts.has_previous %}
             <a href="?page=1" class="btn btn-primary">&laquo; pierwsza</a>
@@ -81,5 +125,11 @@ Witam {{user.username}}<br xmlns:blog="http://www.w3.org/1999/xhtml" xmlns:blog=
             <a href="?page={{ posts.paginator.num_pages }}" class="btn btn-primary">ostatnia &raquo;</a>
         {% endif %}
     </span>
+    </div>
+
+</div>
+
+<div class="footer">
+    <h2>Footer</h2>
 </div>
 {% endblock %}
