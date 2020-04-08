@@ -6,7 +6,7 @@ body {
 
 .leftcolumn {
   float: left;
-  width: 1200px;
+  width: 70%;
 }
 
 img {
@@ -67,13 +67,18 @@ height:100px;
 }
 
 .footer {
-    background-color: white;
     clear: both;
     position: relative;
     height: 100px;
+    text-align: center;
+    width:100%
 
-    width:1761px;
+}
 
+.header {
+  background-color: #F1F1F1;
+  text-align: center;
+  padding: 20px;
 }
 
 

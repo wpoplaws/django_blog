@@ -68,8 +68,10 @@ Witam {{user.username}}<br xmlns:blog="http://www.w3.org/1999/xhtml" xmlns:blog=
 
         </h4>
     </div>
-</div>{% for post in posts %}
+</div>
 <div class="leftcolumn">
+{% for post in posts %}
+
 
 
     <div class="card">
@@ -130,6 +132,7 @@ Witam {{user.username}}<br xmlns:blog="http://www.w3.org/1999/xhtml" xmlns:blog=
 </div>
 
 <div class="footer">
-    <h2>Footer</h2>
+   <br> <h5><div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a href="https://google.com/"> webpage.com</a></h5>
 </div>
 {% endblock %}
