@@ -8,6 +8,8 @@ from blog.views import new_post, update_post, delete_post, post_list, post_detai
 from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.conf import settings
+from django.contrib.sitemaps.views import sitemap
+from blog.sitemaps import PostSitemap
 
 
 router = routers.DefaultRouter()
@@ -16,6 +18,10 @@ router.register(r'groups', views.GroupViewSet)
 router.register(r'posts', views.PostViewSet, basename='name')
 router.register(r'comments', views.CommentsViewSet)
 from rest_framework.authtoken import views
+
+sitemaps = {
+    'posts' : PostSitemap,
+}
 
 urlpatterns = [
     path('rest', include(router.urls)),
@@ -34,6 +40,8 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('', post_list, name='post_list'),
     path('messages_list', messages_list, name='messages_list'),
+    path('sitemap.xml', sitemap,{'sitemaps': sitemaps},
+         name='django.contrib.sitemaps.views.sitemap'),
 
 
 

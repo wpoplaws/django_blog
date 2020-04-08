@@ -1,4 +1,3 @@
-
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -16,6 +15,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     'rest_framework',
     'rest_framework.authtoken',
     'bootstrapform',
@@ -25,6 +26,8 @@ INSTALLED_APPS = [
     'taggit',
     'blog',
 ]
+
+SITE_ID = 1
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
@@ -58,14 +61,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'django_blog.wsgi.application'
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
@@ -74,7 +75,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ]
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -91,8 +91,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-
 LANGUAGE_CODE = 'pl'
 
 TIME_ZONE = 'Europe/Warsaw'
@@ -102,8 +100,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
 
 MEDIA_URL = '/media/'
 
@@ -122,4 +118,3 @@ LOGOUT_REDIRECT_URL = 'login'
 RECAPTCHA_PUBLIC_KEY = '6LdaJeYUAAAAAM_9ysufkZMsAsPaYtRGxc_d5edT'
 
 RECAPTCHA_PRIVATE_KEY = "6LdaJeYUAAAAAACnoB1LvH9KLKdnFazxnlG5OfF8"
-

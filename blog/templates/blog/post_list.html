@@ -3,41 +3,42 @@
 {% block title%} Lista postow{% endblock %}
 {% block body%}
 {% load blog_tags %}
-
-{% if user.is_authenticated %}
-Witam {{user.username}}<br xmlns:blog="http://www.w3.org/1999/xhtml" xmlns:blog="http://www.w3.org/1999/xhtml">
-<a href="{% url 'logout' %}" class="btn btn-primary">Wyloguj </a>
-{% else %}
-<a href="{% url 'login' %}" class="btn btn-primary">Zaloguj </a>
-{% endif %}
-{% if user.is_authenticated %}
-<a href="{% url 'post_list' %}" class="btn btn-primary">Strona główna </a>
-{% endif %}
-{% if user.is_authenticated %}
-<a href="{% url 'new_post' %}" class="btn btn-primary">Nowy post </a>
-{% endif %}
-{% if user.is_authenticated %}
-<a href="{% url 'messages_list' %}" class="btn btn-primary">Wiadomości</a>
-{% endif %}
-{% if user.is_authenticated %}
-<a href="http://localhost:8000/admin/" class="btn btn-primary">Admin</a>
-{% endif %}
-
-<h1>
-    Witaj na mojej stronie :)
-    <h5>
-        <a href="{% url 'ask_question' %}" class="btn btn-primary">Kontakt </a>
-    </h5>
-</h1>
+<div class="adminmenu">
+    {% if user.is_authenticated %}
+    Witam {{user.username}}<br xmlns:blog="http://www.w3.org/1999/xhtml" xmlns:blog="http://www.w3.org/1999/xhtml">
+    <a href="{% url 'logout' %}" class="btn btn-primary">Wyloguj </a>
+    {% else %}
+    <a href="{% url 'login' %}" class="btn btn-primary">Zaloguj </a>
+    {% endif %}
+    {% if user.is_authenticated %}
+    <a href="{% url 'post_list' %}" class="btn btn-primary">Strona główna </a>
+    {% endif %}
+    {% if user.is_authenticated %}
+    <a href="{% url 'new_post' %}" class="btn btn-primary">Nowy post </a>
+    {% endif %}
+    {% if user.is_authenticated %}
+    <a href="{% url 'messages_list' %}" class="btn btn-primary">Wiadomości</a>
+    {% endif %}
+    {% if user.is_authenticated %}
+    <a href="http://localhost:8000/admin/" class="btn btn-primary">Admin</a>
+    {% endif %}
+</div>
+<div class="header">
+    <h1>Najwyższe góry świata </h1>
+    <p>Blog o górach </p>
+</div>
 
 <div class="rightcolumn">
     <div class="rcard">
         <h2>O mnie </h2>
         <div class="avatar">
-            <img src="media/Images/avatar.jpg" alt="avatar">
+            <img src="/media/Images/avatar.jpg" alt="avatar">
         </div>
         <p>Mam na imię Wojciech jestem wielkim pasjonatem gór. Do tej pory na moim
-            blogu opublikowałem {% total_posts %} postów. </p>
+            blogu opublikowałem {% total_posts %} postów. </p> <br>
+        <h5>
+            <a href="{% url 'ask_question' %}" class="btn btn-primary">Kontakt </a>
+        </h5>
     </div>
 
     <div class="rcard">
@@ -70,8 +71,7 @@ Witam {{user.username}}<br xmlns:blog="http://www.w3.org/1999/xhtml" xmlns:blog=
     </div>
 </div>
 <div class="leftcolumn">
-{% for post in posts %}
-
+    {% for post in posts %}
 
 
     <div class="card">
@@ -132,7 +132,10 @@ Witam {{user.username}}<br xmlns:blog="http://www.w3.org/1999/xhtml" xmlns:blog=
 </div>
 
 <div class="footer">
-   <br> <h5><div class="footer-copyright text-center py-3">© 2020 Copyright:
-    <a href="https://google.com/"> webpage.com</a></h5>
+    <br>
+    <h5>
+        <div class="footer-copyright text-center py-3">© 2020 Copyright:
+            <a href="https://google.com/"> webpage.com</a>
+    </h5>
 </div>
 {% endblock %}

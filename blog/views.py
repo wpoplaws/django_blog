@@ -147,7 +147,7 @@ class Messages(object):
 
 def messages_list(request):
     al_messages = Question.objects.all()
-    paginator = Paginator(al_messages, 3)
+    paginator = Paginator(al_messages, 8)
     page = request.GET.get('page')
     messages = paginator.get_page(page)
 

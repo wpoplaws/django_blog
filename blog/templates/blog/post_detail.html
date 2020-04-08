@@ -1,26 +1,74 @@
 {% extends 'blog/main.html' %}
-
 {% block title%} {{ post.title }} {% endblock %}
 {% block body%}
-{% if user.is_authenticated %}
-Witam {{user.username}}<br>
-<a href="{% url 'logout' %}" class="btn btn-primary">Wyloguj </a>
-{% else %}
-<a href="{% url 'login' %}" class="btn btn-primary">Zaloguj </a>
-{% endif %}
-{% if user.is_authenticated %}
-<a href="{% url 'post_list' %}" class="btn btn-primary">Strona główna </a>
-{% endif %}
-{% if user.is_authenticated %}
-<a href="{% url 'new_post' %}" class="btn btn-primary">Nowy post </a>
-{% endif %}
-{% if user.is_authenticated %}
-<a href="{% url 'messages_list' %}" class="btn btn-primary">Wiadomości</a>
-{% endif %}
-{% if user.is_authenticated %}
-<a href="http://localhost:8000/admin/" class="btn btn-primary">Admin</a>
-{% endif %}
+{% load blog_tags %}
+<div class="adminmenu">
+    {% if user.is_authenticated %}
+    Witam {{user.username}}<br xmlns:blog="http://www.w3.org/1999/xhtml" xmlns:blog="http://www.w3.org/1999/xhtml">
+    <a href="{% url 'logout' %}" class="btn btn-primary">Wyloguj </a>
+    {% else %}
+    <a href="{% url 'login' %}" class="btn btn-primary">Zaloguj </a>
+    {% endif %}
+    {% if user.is_authenticated %}
+    <a href="{% url 'post_list' %}" class="btn btn-primary">Strona główna </a>
+    {% endif %}
+    {% if user.is_authenticated %}
+    <a href="{% url 'new_post' %}" class="btn btn-primary">Nowy post </a>
+    {% endif %}
+    {% if user.is_authenticated %}
+    <a href="{% url 'messages_list' %}" class="btn btn-primary">Wiadomości</a>
+    {% endif %}
+    {% if user.is_authenticated %}
+    <a href="http://localhost:8000/admin/" class="btn btn-primary">Admin</a>
+    {% endif %}
+</div>
+<div class="header">
+    <h1>Najwyższe góry świata </h1>
+    <p>Blog o górach </p>
+</div>
 
+<div class="rightcolumn">
+    <div class="rcard">
+        <h2>O mnie </h2>
+        <div class="avatar">
+            <img src="/media/Images/avatar.jpg" alt="avatar">
+        </div>
+        <p>Mam na imię Wojciech jestem wielkim pasjonatem gór. Do tej pory na moim
+            blogu opublikowałem {% total_posts %} postów. </p> <br>
+        <h5>
+            <a href="{% url 'ask_question' %}" class="btn btn-primary">Kontakt </a>
+        </h5>
+    </div>
+
+    <div class="rcard">
+        <h3>Najnowsze posty</h3>
+        {%show_latest_posts%}
+    </div>
+    <div class="card">
+        <h3> Śledź moje social media ! :)</h3>
+        <h4 style="margin:10px;padding: 20px;">
+
+            <div class="grid-item"><a href="https://github.com/" target="_blank"><i class="fa fa-github"
+                                                                                    aria-hidden="true"></i>GitHub</a>
+            </div>
+            <br>
+            <div class="grid-item"><a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-square"
+                                                                                     aria-hidden="true"></i>Facebook</a>
+            </div>
+            <br>
+            <div class="grid-item"><a href="https://instagram.com" target="_blank"><i class="fab fa-instagram-square"
+                                                                                      aria-hidden="true"></i>Instagram</a>
+            </div>
+            <br>
+            <div class="grid-item"><a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"
+                                                                                     aria-hidden="true"></i>Linkedin</a>
+            </div>
+            <br>
+
+
+        </h4>
+    </div>
+</div>
 <div class="card" style="width: 70%;">
     <div class="card-body">
         <img src="/media/{{post.image}}">
@@ -65,25 +113,28 @@ Witam {{user.username}}<br>
 </div>
 
 {% if comments.count == 0 %}
-    Nie ma żadnego komentarza !
+Nie ma żadnego komentarza !
 {% else %}
 {% for comment in post.comments.all %}
 
-    <div class="card" style="width: 70%;">
+<div class="card" style="width: 70%;">
 
-        <div class="card-body">
-            Opublikowane {{ comment.created_date }} <br>
-            <strong> przez: {{ comment.author }}</strong>
-            <p>{{ comment.text|linebreaks }}</p>
-            <br>
-
-
-        </div>
+    <div class="card-body">
+        Opublikowane {{ comment.created_date }} <br>
+        <strong> przez: {{ comment.author }}</strong>
+        <p>{{ comment.text|linebreaks }}</p>
+        <br>
     </div>
+</div>
 {% endfor %}
-
 {% endif %}
-
+<div class="footer">
+    <br>
+    <h5>
+        <div class="footer-copyright text-center py-3">© 2020 Copyright:
+            <a href="https://google.com/"> webpage.com</a>
+    </h5>
+</div>
 
 {% endblock %}
 

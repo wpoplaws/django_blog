@@ -76,10 +76,16 @@ height:100px;
 }
 
 .header {
-  background-color: #F1F1F1;
+  background-color: white;
   text-align: center;
   padding: 20px;
 }
 
+.adminmenu{
+
+margin-top: 10px;
+margin-bottom: 10px;
+
+}
 
 
