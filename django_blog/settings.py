@@ -39,6 +39,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'django_blog.urls'
@@ -101,13 +102,17 @@ USE_L10N = True
 
 USE_TZ = True
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = 'media/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-
-STATIC_ROOT = 'static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 LOGIN_URL = 'login'
 
@@ -122,3 +127,5 @@ RECAPTCHA_PRIVATE_KEY = "6LdaJeYUAAAAAACnoB1LvH9KLKdnFazxnlG5OfF8"
 MAILCHIMP_API_KEY = 'b8d3c395aca99b0fed991736dfcbc68b-us19'
 MAILCHIMP_DATA_CENTER = 'us19'
 MAILCHIMP_EMAIL_LIST_ID = '2884f1faaf'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
