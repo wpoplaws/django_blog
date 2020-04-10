@@ -4,7 +4,7 @@ from django.urls import include, path
 from rest_framework import routers
 from blog import views
 from blog.views import new_post, update_post, delete_post, post_list, post_detail, ask_question, question_confirm, \
-    messages_list, delete_message
+    messages_list, delete_message, email_list_signup
 from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.conf import settings
@@ -32,6 +32,7 @@ urlpatterns = [
                   path('', include('blog.urls')),
                   path('auth/', views.obtain_auth_token),
                   path('new_post/', new_post, name="new_post"),
+                  path('email-signup/', email_list_signup, name='email-list-signup'),
                   path('question_confirm/', question_confirm, name="question_confirm"),
                   path('ask_question/', ask_question, name="ask_question"),
                   path('update_post/<int:id>/', update_post, name="update_post"),

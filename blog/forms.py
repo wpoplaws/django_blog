@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Post, Comments, Question
+from .models import Post, Comments, Question, Signup
 from ckeditor.fields import RichTextFormField
 from django import forms
 from captcha.fields import ReCaptchaField
@@ -52,3 +52,16 @@ class EmailPostForm(ModelForm):
             "email": "Email*",
             "phone_number": "Numer telefonu",
         }
+
+
+class EmailSignupForm(forms.ModelForm):
+    email = forms.EmailField(widget=forms.TextInput(attrs={
+        "type": "email",
+        "name": "email",
+        "id": "email",
+        "placeholder": "Wpisz swój adres e-mail ",
+    }), label="")
+
+    class Meta:
+        model = Signup
+        fields = ('email',)

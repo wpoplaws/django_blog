@@ -2,16 +2,19 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from rest_framework.authentication import TokenAuthentication
 from django.contrib.auth.decorators import login_required
-from .models import Post, Comments, Question
+from .models import Post, Comments, Question, Signup
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from blog.serializers import UserSerializer, GroupSerializer, PostSerializer, CommentsSerializer
-from .forms import PostForm, CommentForm, EmailPostForm
+from .forms import PostForm, CommentForm, EmailPostForm, EmailSignupForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from taggit.models import Tag
 from django.db.models import Count
+import json
+import requests
+from django.contrib import messages
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -31,6 +34,7 @@ class PostViewSet(viewsets.ModelViewSet):
 
 
 def post_list(request, tag_slug=None):
+    newsletter = EmailSignupForm()
     al_posts = Post.published.all()
     tag = None
     if tag_slug:
@@ -47,7 +51,10 @@ def post_list(request, tag_slug=None):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
 
-    return render(request, 'blog/post_list.html', {"posts": posts, 'tag': tag, 'page': page, })
+    return render(request, 'blog/post_list.html', {"posts": posts,
+                                                   'tag': tag,
+                                                   'newsletter': newsletter,
+                                                   'page': page, })
 
 
 def post_detail(request, year, month, day, post):
@@ -164,3 +171,39 @@ def delete_message(request, id):
         return redirect('messages_list')
 
     return render(request, 'blog/message_confirm.html', {"message": message})
+
+
+MAILCHIMP_API_KEY = settings.MAILCHIMP_API_KEY
+MAILCHIMP_DATA_CENTER = settings.MAILCHIMP_DATA_CENTER
+MAILCHIMP_EMAIL_LIST_ID = settings.MAILCHIMP_EMAIL_LIST_ID
+
+api_url = 'https://{dc}.api.mailchimp.com/3.0'.format(dc=MAILCHIMP_DATA_CENTER)
+members_endpoint = '{api_url}/lists/{list_id}/members'.format(
+    api_url=api_url,
+    list_id=MAILCHIMP_EMAIL_LIST_ID
+)
+
+def subscribe(email):
+    data = {
+        "email_address": email,
+        "status": "subscribed"
+    }
+    r = requests.post(
+        members_endpoint,
+        auth=("", MAILCHIMP_API_KEY),
+        data=json.dumps(data)
+    )
+    return r.status_code, r.json()
+
+
+def email_list_signup(request):
+    form = EmailSignupForm(request.POST or None)
+    if request.method == "POST":
+        if form.is_valid():
+            email_signup_qs = Signup.objects.filter(email=form.instance.email)
+            if email_signup_qs.exists():
+                messages.info(request, "Już nas subskrybujesz")
+            else:
+                subscribe(form.instance.email)
+                form.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

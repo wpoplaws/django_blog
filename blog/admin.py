@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Comments, Question
+from .models import Post, Comments, Question, Signup
 
 
 @admin.register(Post)
@@ -18,6 +18,11 @@ class QuestionAdmin(admin.ModelAdmin):
     search_fields = ["email", "name"]
     ordering = ['create_date']
 
+
+
+@admin.register(Signup)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ["email", "timestamp"]
 
 @admin.register(Comments)
 class CommentAdmin(admin.ModelAdmin):

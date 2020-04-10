@@ -30,8 +30,7 @@ class Post(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     objects = models.Manager()
     published = PublishedManager()
-    tags = TaggableManager(blank=True,)
-
+    tags = TaggableManager(blank=True, )
 
     class Meta:
         ordering = ('-date_added',)
@@ -72,9 +71,15 @@ class Comments(models.Model):
 
 class Question(models.Model):
     name = models.CharField(max_length=25, blank=False)
-    email = models.EmailField( blank=False)
+    email = models.EmailField(blank=False)
     comments = models.TextField(max_length=2000, blank=False)
     create_date = models.DateTimeField(default=datetime.now, blank=True)
     phone_number = models.CharField(max_length=12, blank=True, default="")
 
 
+class Signup(models.Model):
+    email = models.EmailField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email
