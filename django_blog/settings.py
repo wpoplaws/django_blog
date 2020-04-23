@@ -4,9 +4,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'a9j4*le5)11pw*a+*&rm5h7+r)pq3)31nk=v%kziyg1ahs&$s$'
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://wpoplaws.herokuapp.com/']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
