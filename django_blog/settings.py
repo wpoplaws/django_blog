@@ -6,7 +6,7 @@ SECRET_KEY = 'a9j4*le5)11pw*a+*&rm5h7+r)pq3)31nk=v%kziyg1ahs&$s$'
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['https://wpoplaws.herokuapp.com/']
+ALLOWED_HOSTS = ['wpoplaws.herokuapp.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
