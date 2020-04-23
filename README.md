@@ -3,5 +3,5 @@ My blog written in Python / Django
 
 test user:
 
-username:guest
+username:guest |
 password:testpassword
